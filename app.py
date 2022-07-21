@@ -39,11 +39,11 @@ app.layout = html.Div(
                 ),
                 dcc.Slider(
                     id="std_slider",
-                    min=0,
-                    max=40,
-                    step=0.5,
-                    value=10,
-                    marks={i: str(i) for i in range(0, 40, 5)},
+                    min=1979,
+                    max=2022,
+                    step=1,
+                    value=1979,
+                    marks={i: str(i) for i in range(1979, 2022, 2)},
                 ),
             ]
         ),
