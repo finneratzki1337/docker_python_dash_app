@@ -1,28 +1,22 @@
-FROM ubuntu
-ARG DEBIAN_FRONTEND=noninteractive
-ENV AM_I_IN_A_DOCKER_CONTAINER Yes
-#Updating on every build for security
-RUN apt-get update
-RUN apt-get install -y wget
-RUN apt-get install -y python3 && apt-get install -y python3-pip
+FROM python:3.9-slim-buster
 
-WORKDIR /code
+LABEL maintainer "Timo Ufermann, timo@tiu-webapplications.de"
 
-#Adding the whole folder
+# set working directory in container
+WORKDIR /usr/src/app
 
+# Copy and install packages
+COPY requirements.txt /
+RUN pip install --upgrade pip
+RUN pip install gunicorn
+RUN pip install -r /requirements.txt
 
-#Or specifically adding requirements txt only
-COPY requirements.txt .
-#COPY app.py .
+# Copy app folder to app folder in container
+COPY . /usr/src/app/
 
-RUN pip3 install -r requirements.txt
-#Add new user for security
-RUN useradd -ms /bin/bash exec-user
-ADD . /code
-#If needed writeable workdir for user (e.g. files or something)
-#RUN chown exec-user files
+# Changing to non-root user
+RUN useradd -m appUser
+USER appUser
 
-#Switching user for security reasons
-USER exec-user
-
-CMD [ "python3", "app.py" ]
+# Run locally on port 8050
+CMD gunicorn --bind 0.0.0.0:8050 app:server

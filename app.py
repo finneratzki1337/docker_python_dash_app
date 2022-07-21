@@ -2,8 +2,16 @@ from configparser import ConfigParser
 import os
 from dotenv import load_dotenv
 
+
+import dash
+import dash_bootstrap_components as dbc
+from dash import dcc
+from dash import html
+from dash.dependencies import Input, Output
+
 #importing own modules
 from module_template import module_class
+from graph_classes.graphs import Graphs
 
 #MY_ENV_VAR = os.getenv('MY_ENV_VAR')
 
@@ -18,9 +26,37 @@ user_name = os.environ['USER_NAME']
 password = os.environ['USER_PASSWORD']
 my_setting = config['GENERAL']['MY_SETTING']
 
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+server = app.server
 
+app.layout = html.Div(
+    [
+        html.Div(
+            [
+                dcc.Graph(id="regression_plot"),
+                html.P(
+                    "Standard Deviation", style={"color": "white", "marginLeft": "20px"}
+                ),
+                dcc.Slider(
+                    id="std_slider",
+                    min=0,
+                    max=40,
+                    step=0.5,
+                    value=10,
+                    marks={i: str(i) for i in range(0, 40, 5)},
+                ),
+            ]
+        ),
+    ]
+)
+
+@app.callback(
+    Output(component_id="regression_plot", component_property="figure"),
+    [Input(component_id="std_slider", component_property="value")],
+)
+def update_regression_plot(std):
+    return my_graphs.windrose(std)
+
+my_graphs = Graphs()
 if __name__ == "__main__":
-    print(f"{user_name}/{password}")
-    print(my_setting)
-    my_class = module_class.sample_class()
-    my_class.sample_method()
+    app.run_server(host="0.0.0.0", port=8050, debug=True)
