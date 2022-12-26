@@ -2,3 +2,6 @@ python-dotenv
 dash
 dash_bootstrap_components
 pandas
+pytest
+black
+pylint
