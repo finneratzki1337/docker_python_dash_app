@@ -33,8 +33,7 @@ server = app.server
 
 
 def main():
-    """Running the actual dash app in local development mode.
-    """
+    """Running the actual dash app in local development mode."""
 
     if debug_mode_setting == "True":
         debug_mode = True
