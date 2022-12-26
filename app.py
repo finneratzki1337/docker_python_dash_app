@@ -1,6 +1,7 @@
-""" This file read an loads the config and environment variables as well as launches the actual dash server.
+""" This file read an loads the config and environment variables and launches the dev dash app.
 
-The dash app itself is generated in src/maindash.py in order to be available for import in all submodules (especially important for callback within the layouts)
+The dash app itself is generated in src/maindash.py in order to be available for import
+in all submodules (especially important for callback within the layouts)
 """
 
 from configparser import ConfigParser
