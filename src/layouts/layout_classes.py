@@ -1,11 +1,11 @@
-from src.graphs.graph_classes import Graphs
-from src.maindash import app
-from dash import dcc
-from dash import html
-from dash.dependencies import Input, Output
-
 # Just for playing around with the callback function, please remove
 import random
+
+from dash import dcc, html
+from dash.dependencies import Input, Output
+
+from src.graphs.graph_classes import Graphs
+from src.maindash import app
 
 my_graphs = Graphs()
 

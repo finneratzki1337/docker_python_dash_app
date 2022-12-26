@@ -4,13 +4,13 @@ The dash app itself is generated in src/maindash.py in order to be available for
 in all submodules (especially important for callback within the layouts)
 """
 
-from configparser import ConfigParser
 import os
+from configparser import ConfigParser
+
 from dotenv import load_dotenv
 
 # Importing own modules.
 from src.layouts.layout_classes import LayoutOne
-
 # Importing the actual, globally launches dash app from src/maindash.py
 from src.maindash import app
 
